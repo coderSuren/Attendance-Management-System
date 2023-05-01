@@ -6,8 +6,11 @@ const bodyParser= require("body-parser")
 
 const app= express();
 
+var db = require('./public/js/database.js')
+
 app.set('view engine','ejs'); 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
 
@@ -16,9 +19,15 @@ app.get("/",function(req,res){
 })
 
 app.post('/', (req, res) => {
-  const { username, password } = req.body;
-  // Todo: Validate username and password
-  res.send('Logged in!');
+  console.log(req.body);
+  login_result = db.query_login(req.body.username, req.body.password, function(status) {
+    if (status) {
+      res.send("Logged In!");
+    }
+    else {
+      res.send("Failed to log in!");
+    }
+  }).finally;
 });
 
 // Start the server
