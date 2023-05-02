@@ -23,9 +23,11 @@ app.post('/', (req, res) => {
   login_result = db.query_login(req.body.username, req.body.password, function(status) {
     if (status) {
       res.send("Logged In!");
+      db.con.end();
     }
     else {
       res.send("Failed to log in!");
+      db.con.end();
     }
   }).finally;
 });

@@ -1,10 +1,11 @@
 var mysql = require('mysql')
 
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "admin",
-    database: "attendance_management_system",
+    host: "sql12.freemysqlhosting.net",
+    user: "sql12615407",
+    password: "1hYuYraIZL",
+    database: "sql12615407",
+    port: 3306,
   });
   
   con.connect(function(err) {
@@ -36,4 +37,4 @@ var con = mysql.createConnection({
     return callback(false);
   }
 
-  module.exports = {query_login}
+  module.exports = {query_login, con}
