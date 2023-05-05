@@ -16,25 +16,25 @@ var con = mysql.createConnection({
   async function query_login(_student_id, _password, callback) {
     let sql = 'SELECT * FROM  system_database';
     console.log(sql);
-    return con.query(sql, [true], (error, results, fields) => {
+    con.query(sql, [true], (error, results, fields) => {
       if (error) {
         console.log('ERROR');
         console.log(error);
-        callback(false)
+        return callback(false);
       } 
+      console.log('NO ERROR');
       
-      Object.keys(results).forEach(function(key) {
-        var row = results[key];
+      let found = false;
+      for (let i = 0; i < results.length; i++) {
+        const row = results[i];
         if (row['student_id'] === _student_id && row['password'] === _password) {
+          found = true;
           console.log('FOUND');
-          callback(true);
+          break;
         }
-      });
-
-      return callback(false);
-    });
-    
-    return callback(false);
-  }
+      }
+      return callback(found);
+    });   
+}
 
   module.exports = {query_login, con}
