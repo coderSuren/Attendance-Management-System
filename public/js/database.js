@@ -15,21 +15,20 @@ var con = mysql.createConnection({
 
   async function query_login(_student_id, _password, callback) {
     let sql = 'SELECT * FROM  system_database';
-    console.log(sql);
     con.query(sql, [true], (error, results, fields) => {
       if (error) {
-        console.log('ERROR');
+        // console.log('ERROR');
         console.log(error);
         return callback(false);
       } 
-      console.log('NO ERROR');
+      // console.log('NO ERROR');
       
       let found = false;
       for (let i = 0; i < results.length; i++) {
         const row = results[i];
         if (row['student_id'] === _student_id && row['password'] === _password) {
           found = true;
-          console.log('FOUND');
+          // console.log('FOUND');
           break;
         }
       }
@@ -37,4 +36,4 @@ var con = mysql.createConnection({
     });   
 }
 
-  module.exports = {query_login, con}
+module.exports = {query_login, con}

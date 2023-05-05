@@ -7,25 +7,44 @@ const bodyParser= require("body-parser")
 const app= express();
 
 var db = require('./public/js/database.js')
+var setTimeout=require("node:timers/promises");
 
 app.set('view engine','ejs'); 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use(function(req, res, next) { 
+  res.header('Cache-Control', 'no-cache, private, no-store');
+   next();
+ });
 
 
+// GET Routes
 app.get("/",function(req,res){
-    res.render("index");   
+    res.render("index");  
 })
 
-app.post('/', (req, res) => {
+
+app.get("/login",function(req,res){
+  res.render("login", {display:"None", errorMessage: ""});
+})
+
+app.get("/home",function(req,res){
+  res.render("home");  
+})
+
+// POST Routes
+
+app.post('/login', (req, res) => {
   console.log(req.body);
   login_result = db.query_login(req.body.username, req.body.password, function(status) {
     if (status) {
-      res.send("Logged In!");
+      console.log("Logged In!");
+      res.redirect("/home");   
     }
     else {
-      res.send("Failed to log in!");
+      console.log("Failed to log in!");
+      res.render("login", {display:"block", errorMessage: "Incorrect Password"}); 
     }
   });
 });
