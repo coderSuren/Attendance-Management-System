@@ -1,11 +1,12 @@
 var mysql = require('mysql')
+require('dotenv').config();
 
 var con = mysql.createConnection({
-    host: "sql12.freemysqlhosting.net",
-    user: "sql12615407",
-    password: "1hYuYraIZL",
-    database: "sql12615407",
-    port: 3306,
+    host: process.env.db_host,
+    user: process.env.db_user,
+    password: process.env.db_pass,
+    database: process.env.db_name,
+    port: process.env.db_port,
   });
   
   con.connect(function(err) {
