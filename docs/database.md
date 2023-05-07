@@ -56,12 +56,14 @@
 | cb.en.u4cse20xxx@academic.edu | CB.EN.XX22 | John               | Apple             | TestPassword@12  | CSE-F   | 19CSE312         | 31/40                 |
 
 > Table :: Teacher Details
-| Teacher Email ID (Primary Key)| Teacher ID |Teacher First Name | Teacher Last Name | Courses Handled | Section Handled  | Average course attendance | Password |
-|-------------------------------|-------------|-------------------|-------------------|-----------------|-----------------|---------------------------|----------|
-| teacher334@academic.edu       | TS3331      |TName              | LName             | 19CSE314        | CSE-F           | 33.0%                     |   abc    |
-| teacher336@academic.edu       | TX 3331     |TNameF             | LNameF            | 19CSE312        | CSE-A           | 100.0%                    |   def    |
 
-Table :: Admin Details
+| Teacher Email ID (Primary Key) | Teacher ID  | Teacher First Name | Teacher Last Name | Courses Handled | Section Handled  | Average course attendance | Password |
+|--------------------------------|-------------|--------------------|-------------------|-----------------|------------------|---------------------------|----------|
+| teacher334@academic.edu        | TS3331      | TName              | LName             | 19CSE314        | CSE-F            | 33.0%                     |   abc    |
+| teacher336@academic.edu        | TX 3331     | TNameF             | LNameF            | 19CSE312        | CSE-A            | 100.0%                    |   def    |
+
+>Table :: Admin Details
+
 | Admin Email ID (Primary Key) | Admin Password |
 |------------------------------|----------------|
 | Admin ASP1                   | s;lfdjalX3234x |
@@ -98,83 +100,83 @@ A table is in 2NF if :
 * There is no Partial dependency (i.e funcational dependency). Dependency is when all columns are dependent only one an single column, the primary key.
 IN a partial dependency, there are 2 or more primary keys in the table (candidate key). Any attribute depending only on part of primary key leads to partial dependency.
 
-> Table :: Student details.
+
+### Table :: Student details.
 The composite primary key is Student Email, Student ID and courses.
 The first name, last name, password, section have dependency with only part of the primary key (i.e the Student ID and Student Email ID) and not the course.
 Due to this, the table is not in 2NF (due to existance of partial dependency).
 
 To make it in 2NF, we can do the following changes:
 
-Table :: Student Email And ID {
-    Student ID
-    Email ID,
+Table :: Student Email And ID { \
+    Student ID \
+    Email ID, \
 };
 
-Table :: Student Personal Details {
-    Student ID,
-    First Name,
-    Last Name, 
-    Password,
-    Section,
+Table :: Student Personal Details { \
+    Student ID, \
+    First Name, \
+    Last Name,  \ 
+    Password, \
+    Section, \
 };
 
-Table :: Student And Select Courses {
-    Student ID,
-    Course ID,
-    Attendance,
+Table :: Student And Select Courses { \
+    Student ID, \
+    Course ID, \
+    Attendance, \
 }
 
-> Table :: Teacher Details.
+### Table :: Teacher Details.
 Similar to the last table, the composite primary key is Teacher Email ID, Teacher ID, and Courses handled.
 To make the table into 2NF, we split the Teacher Details table as follows:
 
-Table :: Teacher Email And ID {
-    Teacher ID,
-    Teacher Email ID
+Table :: Teacher Email And ID { \
+    Teacher ID, \
+    Teacher Email ID \
 };
 
-Table :: Teacher Personal Details {
-    Teacher ID,
-    Teacher First Name,
-    Teacher Last Name,
-    Password,
+Table :: Teacher Personal Details { \
+    Teacher ID, \
+    Teacher First Name, \
+    Teacher Last Name, \
+    Password, \
 }
 
-Table :: Teacher Course Details {
-    Teacher ID,
-    Courses Handled,
-    Class Sections handled,
-    Average attendance
+Table :: Teacher Course Details { \
+    Teacher ID, \
+    Courses Handled, \
+    Class Sections handled, \
+    Average attendance \
 }
 
-> Table :: Admin Details
+### Table :: Admin Details
 This table is already in 2NF, hence no changes are required.
 
-> Table :: Course / Attendance related.
+### Table :: Course / Attendance related.
 The composite primary key here is (Course code, Section, Students Enrolled).
 Course Title depends on the Course Code and not the section. Similary, Date and Time Slot do not depend on the students enrolled (but depend on Course Code and Section). Due to these partial dependencies, the Table is NOT in 2NF form.
 To convert the table into required form, we split the table as follows:
 
-Table :: Course Data {
-    Course Code,
-    Title
+Table :: Course Data { \
+    Course Code, \
+    Title \
 }
 
-Table :: Section Wise Couse Details {
-    Course Code,
-    Section, 
-    Teacher Assigned,
-    Time Slot, 
-    Date
+Table :: Section Wise Couse Details { \
+    Course Code, \
+    Section,  \
+    Teacher Assigned, \
+    Time Slot,  \
+    Date \
 }
 
 The composite primary key in this table would be Course Code, Section, and Teacher Assigned, Time Slot and Date.
 
-Table :: Course and Student Data { // This table already exist as  Student And Select Courses table.
-
-    Course Code,
-    Students Enrolled in Course,
-    Attendance (per student)
+Table :: Course and Student Data { // This table already exist as  Student And Select Courses table. \
+    Course Code, \
+    Students Enrolled in Course, \
+    Attendance (per student) \
 }
 
 # Normalization (3NF)
@@ -184,70 +186,70 @@ A table is said to be in 3NF if:
 
 * Has no transitive partial dependency. That is, if A -> B and B -> C, then there exist a transitive dependency between C and A.
 
-Student Email and ID has no transitive dependencies, hence already in the 3NF form.
-Table :: Student Email and ID {
-    **Student ID**,
-    Email ID
+Student Email and ID has no transitive dependencies, hence already in the 3NF form. \
+Table :: Student Email and ID { \
+    **Student ID**, \
+    Email ID \
 }
 
-Student Personal Details has no transitive dependencies, hence already in 3NF form.
-Table :: Student Personal Details {
-    **Student ID**,
-    First Name,
-    Last Name, 
-    Password,
-    Section,
+Student Personal Details has no transitive dependencies, hence already in 3NF form. \
+Table :: Student Personal Details { \
+    **Student ID**, \
+    First Name, \
+    Last Name,  \
+    Password, \
+    Section, \
 };
 
-Student and Select Course table has no transitive dependencies, hence already in 3NF.
-Table :: Student And Select Courses {
-    **Student ID**,
-    **Course ID**,
-    Attendance,
+Student and Select Course table has no transitive dependencies, hence already in 3NF. \
+Table :: Student And Select Courses { \
+    **Student ID**, \
+    **Course ID**,     \ 
+    Attendance, \
 }
 
 
 
-Teacher Email and ID table has no transitive dependencies, hence already in 3NF.
-Table :: Teacher Email And ID {
-    **Teacher ID**,
-    Teacher Email ID
+Teacher Email and ID table has no transitive dependencies, hence already in 3NF. \
+Table :: Teacher Email And ID { \
+    **Teacher ID**, \
+    Teacher Email ID \
 };
 
-Teacher Personal Details has no transitive dependency, so already in 3NF.
-Table :: Teacher Personal Details {
-    **Teacher ID**,
-    Teacher First Name,
-    Teacher Last Name,
-    Password,
+Teacher Personal Details has no transitive dependency, so already in 3NF. \
+Table :: Teacher Personal Details { \
+    **Teacher ID**, \
+    Teacher First Name, \
+    Teacher Last Name, \
+    Password, \
 }
 
-Teacher Course details has no transitive dependency so already in 3NF.
-Table :: Teacher Course Details {
-    **Teacher ID**,
-    **Courses Handled**,
-    Class Sections handled,
-    Average attendance
+Teacher Course details has no transitive dependency so already in 3NF. \
+Table :: Teacher Course Details { \
+    **Teacher ID**, \
+    **Courses Handled**, \
+    Class Sections handled, \
+    Average attendance \
 }
 
-Admin details already in 3NF.
-Table :: Admin Details {
-    **Admin ID**
-    Admin password
+Admin details already in 3NF. \
+Table :: Admin Details { \
+    **Admin ID** \
+    Admin password \
 }
 
-Course Data is already in 3NF, hence no changes.
-Table :: Course Data {
-    **Course Code**,
-    Title
+Course Data is already in 3NF, hence no changes. \
+Table :: Course Data { \
+    **Course Code**, \
+    Title \
 }
 
-Section wise course details and Course and Student data is already in 3NF.
-Table :: Section Wise Couse Details {
-    **Course Code**,
-    **Section**, 
-    **Teacher Assigned**,
-    **Time Slot**, 
-    **Date**
+Section wise course details and Course and Student data is already in 3NF. \
+Table :: Section Wise Couse Details { \
+    **Course Code**, \
+    **Section**,  \
+    **Teacher Assigned**, \
+    **Time Slot**,  \
+    **Date** \
 }
 
