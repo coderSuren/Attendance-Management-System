@@ -253,8 +253,6 @@ Table :: Section Wise Couse Details { \
     **Course Code**, \
     **Section**,  \
     **Teacher Assigned**, \
-    **Time Slot**,  \
-    **Date** \
 }
 
 Authentication Based Data
@@ -264,3 +262,14 @@ Table :: LoginData { \
     Role \
 }
 
+Attendance Table
+Table :: {
+    Student ID \
+    Course ID \
+    Date \
+    Faculty ID \
+    Present (P/A/OD) \
+    Number of Hours, \
+    Start Period, \
+    End Period \
+}
